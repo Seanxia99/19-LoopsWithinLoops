@@ -3,8 +3,8 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Shuang Xia.
+"""  # DO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -80,9 +80,21 @@ def draw_L(window, circle, r, c):
     and m and n are small, positive integers.
     """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DO: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    original_x = circle.center.x
+    for i in range(r + 3):
+        for j in range(3):
+            new_circle = rg.Circle(rg.Point(circle.center.x, circle.center.y), circle.radius)
+            new_circle.fill_color = circle.fill_color
+            new_circle.attach_to(window)
+            window.render()
+            circle.center.x += 2 * circle.radius
+        circle.center.y += 2 * circle.radius
+        circle.center.x = original_x
+
+
 
 
 def run_test_draw_wall_on_right():
@@ -121,10 +133,25 @@ def draw_wall_on_right(rectangle, n, window):
     and n is a small, positive integer.
     """
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DO: 3. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
-
+    rect_c1_x = rectangle.corner_1.x
+    rect_c2_x = rectangle.corner_2.x
+    delta_x = abs(rectangle.corner_2.x - rectangle.corner_1.x)
+    delta_y = abs(rectangle.corner_2.y - rectangle.corner_1.y)
+    print(delta_x, delta_y)
+    for i in range(n):
+        for j in range(i + 1):
+            new_rect = rg.Rectangle(rectangle.corner_1, rectangle.corner_2)
+            new_rect.attach_to(window)
+            window.render()
+            rectangle.corner_2.x -= delta_x
+            rectangle.corner_1.x -= delta_x
+        rectangle.corner_1.y += delta_y
+        rectangle.corner_2.y += delta_y
+        rectangle.corner_2.x = rect_c2_x
+        rectangle.corner_1.x = rect_c1_x
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
